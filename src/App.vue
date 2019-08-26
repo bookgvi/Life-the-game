@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <v-stage :config="stage">
+      <v-layer>
+        <life-elem-col
+          v-for="i in lifeCols"
+          :key="i"
+          :col="i"
+        />
+      </v-layer>
+    </v-stage>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { mapGetters, mapActions } from 'vuex'
+import lifeElemCol from './components/lifeElemCol'
 export default {
-  name: 'app',
+  created () {
+    this.concieve()
+  },
   components: {
-    HelloWorld
+    'life-elem-col': lifeElemCol
+  },
+  computed: {
+    ...mapGetters([
+      'stage',
+      'lifeCols'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'concieve'
+    ])
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
