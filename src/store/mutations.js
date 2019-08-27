@@ -36,18 +36,40 @@ export const mutations = {
     Vue.set(state.lifeElem[num.col][num.row], 'isAlive', true)
     state.aliveCount++
     // Neighbors section
-    if (num.col > 0) {
-      state.lifeElem[num.col - 1][num.row].aliveHeighbors++
-      if (num.row > 0) { state.lifeElem[num.col - 1][num.row - 1].aliveHeighbors++ }
-      if (num.row < state.lifeElemRows) { state.lifeElem[num.col - 1][num.row + 1].aliveHeighbors++ }
-    }
-    if (num.row > 0) { state.lifeElem[num.col][num.row - 1].aliveHeighbors++ }
-    if (num.row < state.lifeElemRows) { state.lifeElem[num.col][num.row + 1].aliveHeighbors++ }
+    state.lifeElem[hasCol(num.col - 1)][hasRow(num.row - 1)].aliveHeighbors++
+    state.lifeElem[hasCol(num.col)][hasRow(num.row - 1)].aliveHeighbors++
+    state.lifeElem[hasCol(num.col + 1)][hasRow(num.row - 1)].aliveHeighbors++
 
-    if (num.col < state.lifeElemCols) {
-      state.lifeElem[num.col + 1][num.row].aliveHeighbors++
-      if (num.row > 0) { state.lifeElem[num.col + 1][num.row -1].aliveHeighbors++ }
-      if (num.row < state.lifeElemRows) { state.lifeElem[num.col + 1][num.row + 1].aliveHeighbors++ }
+    state.lifeElem[hasCol(num.col - 1)][hasRow(num.row)].aliveHeighbors++
+    state.lifeElem[hasCol(num.col + 1)][hasRow(num.row)].aliveHeighbors++
+
+    state.lifeElem[hasCol(num.col - 1)][hasRow(num.row + 1)].aliveHeighbors++
+    state.lifeElem[hasCol(num.col)][hasRow(num.row + 1)].aliveHeighbors++
+    state.lifeElem[hasCol(num.col + 1)][hasRow(num.row + 1)].aliveHeighbors++
+
+    function hasRow (value) {
+      switch (value) {
+        case -1:
+          return state.lifeElemRows - 1
+          break
+        case state.lifeElemRows:
+          return 0
+          break
+        default:
+          return value
+      }
+    }
+    function hasCol (value) {
+      switch (value) {
+        case -1:
+          return state.lifeElemCols - 1
+          break
+        case state.lifeElemCols:
+          return 0
+          break
+        default:
+          return value
+      }
     }
   },
   [types.DIE]: (state, num) => {
@@ -55,17 +77,40 @@ export const mutations = {
     Vue.set(state.lifeElem[num.col][num.row], 'isAlive', false)
     state.aliveCount--
     // NeighBors section
-    if (num.col > 0) {
-      state.lifeElem[num.col - 1][num.row].aliveHeighbors--
-      if (num.row > 0) { state.lifeElem[num.col - 1][num.row - 1].aliveHeighbors-- }
-      if (num.row < state.lifeElemRows) { state.lifeElem[num.col - 1][num.row + 1].aliveHeighbors-- }
+    state.lifeElem[hasCol(num.col - 1)][hasRow(num.row - 1)].aliveHeighbors--
+    state.lifeElem[hasCol(num.col)][hasRow(num.row - 1)].aliveHeighbors--
+    state.lifeElem[hasCol(num.col + 1)][hasRow(num.row - 1)].aliveHeighbors--
+
+    state.lifeElem[hasCol(num.col - 1)][hasRow(num.row)].aliveHeighbors--
+    state.lifeElem[hasCol(num.col + 1)][hasRow(num.row)].aliveHeighbors--
+
+    state.lifeElem[hasCol(num.col - 1)][hasRow(num.row + 1)].aliveHeighbors--
+    state.lifeElem[hasCol(num.col)][hasRow(num.row + 1)].aliveHeighbors--
+    state.lifeElem[hasCol(num.col + 1)][hasRow(num.row + 1)].aliveHeighbors--
+
+    function hasRow (value) {
+      switch (value) {
+        case -1:
+          return state.lifeElemRows - 1
+          break
+        case state.lifeElemRows:
+          return 0
+          break
+        default:
+          return value
+      }
     }
-    if (num.row > 0) { state.lifeElem[num.col][num.row - 1].aliveHeighbors-- }
-    if (num.row < state.lifeElemRows) { state.lifeElem[num.col][num.row + 1].aliveHeighbors-- }
-    if (num.col < state.lifeElemCols) {
-      state.lifeElem[num.col + 1][num.row].aliveHeighbors--
-      if (num.row > 0) { state.lifeElem[num.col + 1][num.row -1].aliveHeighbors-- }
-      if (num.row < state.lifeElemRows) { state.lifeElem[num.col + 1][num.row + 1].aliveHeighbors-- }
+    function hasCol (value) {
+      switch (value) {
+        case -1:
+          return state.lifeElemCols - 1
+          break
+        case state.lifeElemCols:
+          return 0
+          break
+        default:
+          return value
+      }
     }
   }
 }

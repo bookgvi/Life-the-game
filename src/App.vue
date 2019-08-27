@@ -2,7 +2,7 @@
   <div id="app">
     Поколение: {{ cicleNum }} Число живых: {{ aliveCount }}
     <h1 v-if="isOver">Over...</h1>
-    <button @click="beginLifeCicle()">Start</button>
+    <button @click="beginLifeCicle()" v-if="isStartBtn">Start</button>
 <!--    <button @click="window.location.reload()">Restart</button>-->
     <v-stage :config="stage">
       <v-layer ref="edem">
@@ -21,6 +21,7 @@ import { mapGetters, mapActions } from 'vuex'
 import lifeElemCol from './components/lifeElemCol'
 export default {
   data: () => ({
+    isStartBtn: true,
     isOver: false,
     isEvolution: false,
     lifeTimer: 0,
@@ -68,7 +69,7 @@ export default {
       }
     })
     // Click handler --------------------------------------------------------------------------------------------------
-    this.$refs.edem.getNode().on('click', (e) => {
+    this.$refs.edem.getNode().on('click tap', (e) => {
       let col = Math.floor((e.target._id - 3) / this.lifeRows)
       let row = (e.target._id - 3) % this.lifeRows
       if (this.lifeElem[col][row].isAlive) {
@@ -122,6 +123,7 @@ export default {
     },
     beginLifeCicle () {
       this.isOver = false
+      this.isStartBtn = false
       this.isEvolution.start()
     }
   }
