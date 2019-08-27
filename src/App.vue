@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     Поколение: {{ cicleNum }}
+    <button @click="isEvolution.start()">Start</button>
+    <button @click="isEvolution.stop()">Stop</button>
+    <button @click="window.location.reload()">Restart</button>
     <v-stage :config="stage">
       <v-layer ref="edem">
         <life-elem-col
@@ -32,7 +35,7 @@ export default {
   mounted () {
     // eslint-disable-next-line no-undef
     this.isEvolution = new Konva.Animation(frame => {
-      if (frame.time - this.lifeTimer > 3000) {
+      if (frame.time - this.lifeTimer > 4000) {
         this.lifeTimer = Math.max(this.lifeTimer, frame.time)
         this.isEndOfCicle = !this.isEndOfCicle
         this.bornOrDie = !this.bornOrDie
@@ -65,7 +68,6 @@ export default {
       } else {
         this.born({ col, row })
       }
-      this.isEvolution.start()
     })
   },
   components: {
