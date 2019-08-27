@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import * as types from './mutations-types'
-
+/* eslint-disable */
 export const mutations = {
   [types.CONCIEVE]: (state) => {
     let radius = 15
@@ -25,7 +25,8 @@ export const mutations = {
           },
           offsetX,
           offsetY,
-          isAlive: false
+          isAlive: false,
+          aliveHeighbors: 0
         })
       }
     }
@@ -33,9 +34,36 @@ export const mutations = {
   [types.BORN]: (state, num) => {
     Vue.set(state.lifeElem[num.col][num.row].config, 'fill', '#0095ee')
     Vue.set(state.lifeElem[num.col][num.row], 'isAlive', true)
+    // Neighbors section
+    if (num.col > 0) {
+      state.lifeElem[num.col - 1][num.row].aliveHeighbors++
+      if (num.row > 0) { state.lifeElem[num.col - 1][num.row - 1].aliveHeighbors++ }
+      if (num.row < state.lifeElemRows) { state.lifeElem[num.col - 1][num.row + 1].aliveHeighbors++ }
+    }
+    if (num.row > 0) { state.lifeElem[num.col][num.row - 1].aliveHeighbors++ }
+    if (num.row < state.lifeElemRows) { state.lifeElem[num.col][num.row + 1].aliveHeighbors++ }
+
+    if (num.col < state.lifeElemCols) {
+      state.lifeElem[num.col + 1][num.row].aliveHeighbors++
+      if (num.row > 0) { state.lifeElem[num.col + 1][num.row -1].aliveHeighbors++ }
+      if (num.row < state.lifeElemRows) { state.lifeElem[num.col + 1][num.row + 1].aliveHeighbors++ }
+    }
   },
   [types.DIE]: (state, num) => {
     Vue.set(state.lifeElem[num.col][num.row].config, 'fill', '#ffffff')
     Vue.set(state.lifeElem[num.col][num.row], 'isAlive', false)
+    // NeighBors section
+    if (num.col > 0) {
+      state.lifeElem[num.col - 1][num.row].aliveHeighbors--
+      if (num.row > 0) { state.lifeElem[num.col - 1][num.row - 1].aliveHeighbors-- }
+      if (num.row < state.lifeElemRows) { state.lifeElem[num.col - 1][num.row + 1].aliveHeighbors-- }
+    }
+    if (num.row > 0) { state.lifeElem[num.col][num.row - 1].aliveHeighbors-- }
+    if (num.row < state.lifeElemRows) { state.lifeElem[num.col][num.row + 1].aliveHeighbors-- }
+    if (num.col < state.lifeElemCols) {
+      state.lifeElem[num.col + 1][num.row].aliveHeighbors--
+      if (num.row > 0) { state.lifeElem[num.col + 1][num.row -1].aliveHeighbors-- }
+      if (num.row < state.lifeElemRows) { state.lifeElem[num.col + 1][num.row + 1].aliveHeighbors-- }
+    }
   }
 }
