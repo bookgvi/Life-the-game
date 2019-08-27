@@ -6,8 +6,9 @@ export const mutations = {
     let radius = 15
     let offsetX = 20
     let offsetY = 20
-    let rowsCount = Math.floor((state.stage.config.height - state.stage.config.y) / (2 * radius + offsetY))
-    let colsCount = Math.floor((state.stage.config.width - state.stage.config.x) / (2 * radius + offsetX))
+    let rowsCount = Math.floor((state.stage.config.height - state.stage.config.y - offsetY) / (2 * radius))
+    let colsCount = Math.floor((state.stage.config.width - state.stage.config.x - offsetX) / (2 * radius))
+    console.log(rowsCount, colsCount)
     state.lifeElemCols = colsCount
     state.lifeElemRows = rowsCount
     for (let c = 0; c < colsCount; c++) {

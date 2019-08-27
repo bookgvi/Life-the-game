@@ -1,22 +1,17 @@
 <template>
   <div class="div">
-    <life-elem-row
+    <v-circle
       v-for="row in lifeRows"
       :key="row"
-      :row="row"
-      :col="col"
+      :config="lifeElem[col-1][row-1].config"
     />
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import LifeElemRow from '@/components/LifeElemRow'
 export default {
   props: {
     col: Number
-  },
-  components: {
-    LifeElemRow
   },
   computed: {
     ...mapGetters([
