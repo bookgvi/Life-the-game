@@ -38,7 +38,7 @@ export default {
     this.$refs.edem.getNode().children.transformsEnabled('position')
     // eslint-disable-next-line no-undef
     this.isEvolution = new Konva.Animation(frame => {
-      if (frame.time - this.lifeTimer > 2000) {
+      if (frame.time - this.lifeTimer > 1000) {
         this.lifeTimer = Math.max(this.lifeTimer, frame.time)
         this.isEndOfCicle = !this.isEndOfCicle
         this.bornOrDie = !this.bornOrDie
