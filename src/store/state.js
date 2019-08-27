@@ -20,5 +20,6 @@ export const state = {
   },
   lifeElem: [],
   lifeElemCols: 0,
-  lifeElemRows: 0
+  lifeElemRows: 0,
+  aliveCount: 0
 }

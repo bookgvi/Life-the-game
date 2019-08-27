@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    Поколение: {{ cicleNum }}
+    Поколение: {{ cicleNum }} Число живых: {{ aliveCount }}
+    <h1 v-if="isOver">Over...</h1>
     <button @click="isEvolution.start()">Start</button>
-    <button @click="isEvolution.stop()">Stop</button>
-    <button @click="window.location.reload()">Restart</button>
+<!--    <button @click="window.location.reload()">Restart</button>-->
     <v-stage :config="stage">
       <v-layer ref="edem">
         <life-elem-col
@@ -21,6 +21,7 @@ import { mapGetters, mapActions } from 'vuex'
 import lifeElemCol from './components/lifeElemCol'
 export default {
   data: () => ({
+    isOver: false,
     isEvolution: false,
     lifeTimer: 0,
     isEndOfCicle: true,
@@ -35,7 +36,7 @@ export default {
   mounted () {
     // eslint-disable-next-line no-undef
     this.isEvolution = new Konva.Animation(frame => {
-      if (frame.time - this.lifeTimer > 4000) {
+      if (frame.time - this.lifeTimer > 2000) {
         this.lifeTimer = Math.max(this.lifeTimer, frame.time)
         this.isEndOfCicle = !this.isEndOfCicle
         this.bornOrDie = !this.bornOrDie
@@ -59,10 +60,15 @@ export default {
         }
         this.bornOrDie = false
       }
+      if (!this.aliveCount) {
+        this.isEvolution.stop()
+        this.isOver = true
+        console.log('Finita la paradiso...')
+      }
     })
     this.$refs.edem.getNode().on('click', (e) => {
-      let col = Math.floor((e.target.index) / this.lifeRows)
-      let row = (e.target.index) % this.lifeRows
+      let col = Math.floor((e.target._id - 3) / this.lifeRows)
+      let row = (e.target._id - 3) % this.lifeRows
       if (this.lifeElem[col][row].isAlive) {
         this.die({ col, row })
       } else {
@@ -78,7 +84,8 @@ export default {
       'stage',
       'lifeElem',
       'lifeCols',
-      'lifeRows'
+      'lifeRows',
+      'aliveCount'
     ])
   },
   methods: {

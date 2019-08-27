@@ -34,6 +34,7 @@ export const mutations = {
   [types.BORN]: (state, num) => {
     Vue.set(state.lifeElem[num.col][num.row].config, 'fill', '#0095ee')
     Vue.set(state.lifeElem[num.col][num.row], 'isAlive', true)
+    state.aliveCount++
     // Neighbors section
     if (num.col > 0) {
       state.lifeElem[num.col - 1][num.row].aliveHeighbors++
@@ -52,6 +53,7 @@ export const mutations = {
   [types.DIE]: (state, num) => {
     Vue.set(state.lifeElem[num.col][num.row].config, 'fill', '#ffffff')
     Vue.set(state.lifeElem[num.col][num.row], 'isAlive', false)
+    state.aliveCount--
     // NeighBors section
     if (num.col > 0) {
       state.lifeElem[num.col - 1][num.row].aliveHeighbors--
