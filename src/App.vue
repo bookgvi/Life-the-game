@@ -2,7 +2,7 @@
   <div id="app">
     Поколение: {{ cicleNum }} Число живых: {{ aliveCount }}
     <h1 v-if="isOver">Over...</h1>
-    <button @click="isEvolution.start()">Start</button>
+    <button @click="beginLifeCicle()">Start</button>
 <!--    <button @click="window.location.reload()">Restart</button>-->
     <v-stage :config="stage">
       <v-layer ref="edem">
@@ -34,6 +34,7 @@ export default {
     this.concieve()
   },
   mounted () {
+    this.$refs.edem.getNode().children.transformsEnabled('position')
     // eslint-disable-next-line no-undef
     this.isEvolution = new Konva.Animation(frame => {
       if (frame.time - this.lifeTimer > 2000) {
@@ -66,6 +67,7 @@ export default {
         console.log('Finita la paradiso...')
       }
     })
+    // Click handler --------------------------------------------------------------------------------------------------
     this.$refs.edem.getNode().on('click', (e) => {
       let col = Math.floor((e.target._id - 3) / this.lifeRows)
       let row = (e.target._id - 3) % this.lifeRows
@@ -118,6 +120,10 @@ export default {
       r++
       this.bornOrDieM(c, r)
     },
+    beginLifeCicle () {
+      this.isOver = false
+      this.isEvolution.start()
+    }
   }
 }
 </script>

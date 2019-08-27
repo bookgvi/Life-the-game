@@ -8,7 +8,6 @@ export const mutations = {
     let offsetY = 20
     let rowsCount = Math.floor((state.stage.config.height - state.stage.config.y - offsetY) / (2 * radius))
     let colsCount = Math.floor((state.stage.config.width - state.stage.config.x - offsetX) / (2 * radius))
-    console.log(rowsCount, colsCount)
     state.lifeElemCols = colsCount
     state.lifeElemRows = rowsCount
     for (let c = 0; c < colsCount; c++) {
@@ -21,8 +20,8 @@ export const mutations = {
             x,
             y,
             radius,
-            stroke: '#333333',
-            strokeWidth: 1
+            stroke: '#cccccc',
+            strokeWidth: 1,
           },
           offsetX,
           offsetY,

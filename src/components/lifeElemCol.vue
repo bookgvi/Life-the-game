@@ -4,6 +4,7 @@
       v-for="row in lifeRows"
       :key="row"
       :config="lifeElem[col-1][row-1].config"
+      ref="life"
     />
   </div>
 </template>

@@ -1,12 +1,12 @@
-const offsetX = 0
-const offsetY = 0
+const offsetX = 10
+const offsetY = 25
 export const state = {
   stage: {
     config: {
-      x: offsetX,
-      y: offsetY,
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight
+      x: 0,
+      y: 0,
+      width: document.documentElement.clientWidth - offsetX,
+      height: document.documentElement.clientHeight - offsetY
     }
   },
   cells: {
